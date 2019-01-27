@@ -1,0 +1,64 @@
+/* //////////////////  Legend \\\\\\\\\\\\\\\\\\\\\ */
+/* There are only classes due to this being made with react */
+/* Component mods are represented with description-chains-with-dashes */
+/* General style mods are all one word and begin with a capital letter */
+
+
+/* ////////////// Component mods \\\\\\\\\\\\\\\\\ */
+
+.card {
+  background-color: lightblue;
+  color: black;
+  border: blue solid 2px;
+}
+
+.delete-btn {
+  float: right;
+  color: #e74944;
+}
+
+.list-overflow-container {
+  max-height: 545px;
+  border: 1px #DDDDDD solid;
+  border-radius: 4px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.list-overflow-container ul {
+  margin: 0;
+}
+
+.list-overflow-container li {
+  border-radius: 0px;
+  border-left: none;
+  border-right: none;
+}
+
+.list-overflow-container li * {
+  cursor: pointer;
+}
+
+.list-overflow-container li a {
+  color: #2A878C;
+}
+
+.list-overflow-container li:first-child {
+  border-top: none;
+}
+
+.list-overflow-container li:last-child {
+  border-bottom: none;
+}
+
+/* ////////////////// General style mods \\\\\\\\\\\\\\\\\\\ */
+
+.flexRow {
+  background-color: #2A878C;
+  color: #2A878C;
+  max-height: 545px;
+  border: 1px #DDDDDD solid;
+  border-radius: 4px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}

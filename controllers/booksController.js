@@ -3,12 +3,17 @@ const db = require("../models");
 // Defining methods for the booksController
 module.exports = {
 
-  search: function(author, res) {
-      const apiKey = "zgjpi3khaW18Goh5WSGZhszJvLz27vcf";
-      const queryURL = "https://api.nytimes.com/svc/books/v3/lists/current/hardcover-fiction.json?api-key=" +
-      apiKey + "&q=" + topic;
-      return axios.get(queryURL);
-  },
+  // Gets all books in a api call
+  apiSearch: async (e, res) => {
+    // e.preventDefault()
+    console.log("test")
+     const apiKey = "zgjpi3khaW18Goh5WSGZhszJvLz27vcf";
+     // let author = "Steven King";
+     const queryURL = "https://api.nytimes.com/svc/books/v3/lists/current/hardcover-fiction.json?api-key=" + apiKey;
+     const result = await axios.get(queryURL);
+     console.log(result)
+     return result
+   },
 
   findAll: function(req, res) {
     db.Book

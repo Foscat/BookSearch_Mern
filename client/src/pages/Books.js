@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import Jumbotron from "../components/Jumbotron/index";
 import API from "../utils/API";
 import DeleteBtn from "../components/DeleteBtn/index";
-import { Col, Row, Container } from "../components/Grid/index";
-import { List, ListItem } from "../components/List/index";
-import { Input, TextArea, FormBtn } from "../components/Form/index";
+import { Col, Row, Container} from "../components/Grid/index";
+import { List} from "../components/List/index";
+import { Input, FormBtn } from "../components/Form/index";
 import Card from "../components/Card";
 
 class Books extends Component {
@@ -52,45 +52,29 @@ class Books extends Component {
             </form>
             <button onClick={() => this.searchBooks()}>Search</button>
           </Col>
-          <Col size="md-6 sm-12">
-            <Jumbotron>
-              <h1>Books On My List</h1>
-            </Jumbotron>
-            {this.state.books.length ? (
-              <List>
-                {this.state.books.map(book => (
-                  <ListItem key={book._id}>
-                    <a href={"/books/" + book._id}>
-                      <strong>
-                        {book.title} by {book.author}
-                      </strong>
-                    </a>
-                    <DeleteBtn />
-                  </ListItem>
-                ))}
-              </List>
-            ) : (
-              <h3>No Results to Display</h3>
-            )}
-          </Col>
-{/* ##################################################################################################### */}
-          {/* My card tester */}
-          <Col size="md-6 sm-12">
+          
+          <Col size="lg-6 sm-12">
             <Jumbotron>
               <h1>Books I've searched using cards</h1>
             </Jumbotron>
+            <List>
             {this.state.bookSearch.length ? (
               <div>
                 {this.state.bookSearch.map(booksearch => {
                   console.log(booksearch.primary_isbn10);
                 return (
-                  <Card key={booksearch.primary_isbn10}>
+                  <Card className="m-5 p-5" key={booksearch.primary_isbn10}>
                     <div className="card-title">
                       <h3>{booksearch.title}</h3>
                       <h5>{booksearch.author}</h5>
                     </div>
 
-                    <img className="card-img-top" src={booksearch.book_image} alt={booksearch.title}></img>
+                    <div className="card-img-top">
+                    <img 
+                      src={booksearch.book_image} 
+                      alt={booksearch.title}
+                    ></img>
+                    </div>
 
                     <div className="card-body">
                       <p className="summary">{booksearch.description}</p>
@@ -102,7 +86,9 @@ class Books extends Component {
             ) : (
               <h3>No Results to Display</h3>
             )}
+            </List>
           </Col>
+          
         </Row>
       </Container>
     );
