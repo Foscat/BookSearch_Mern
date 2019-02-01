@@ -1,6 +1,5 @@
 import React from "react";
-import SaveBtn from "../SaveBtn/index";
-import DeleteBtn from "../DeleteBtn/index";
+import "../style.css";
 
 
 // This file exports both the List and ListItem components
@@ -13,23 +12,12 @@ export function List({ children }) {
   );
 }
 
-export const ListItem = ({ children, data, addBook, removeBook }) => {
+export const ListItem = ({ children }) => {
 
-  const addToBooks = () => {
-		addBook(data);
-	};
-
-	const removeFromBooks = () => {
-		removeBook(data);
-	};
 
   return (  
     <li className="list-group-item">
       {children}
-
-      <SaveBtn onClick={() => addToBooks()} />
-      <br />
-      <DeleteBtn onClick={() => removeFromBooks()} />
 
     </li>);
 }

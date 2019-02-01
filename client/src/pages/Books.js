@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import Jumbotron from "../components/Jumbotron/index";
 import API from "../utils/API";
+import SaveBtn from "../components/SaveBtn/index";
+import DeleteBtn from "../components/DeleteBtn/index";
 import { Col, Row, Container} from "../components/Grid/index";
 import { List, ListItem} from "../components/List/index";
-import { Input, FormBtn } from "../components/Form/index";
+import { Input } from "../components/Form/index";
 // import Card from "../components/Card";
 
 class Books extends Component {
@@ -27,7 +29,9 @@ class Books extends Component {
 
   loadBooks = () => {
     API.getBooks()
-      .then(res => this.setState({ books: this.state.books}))
+      .then(res => 
+        this.setState( { books: res.data} )
+      )
       .catch(err => console.log(err));
   };
 
@@ -49,12 +53,15 @@ class Books extends Component {
   // When the form is submitted, use the API.saveBook method to save the book data
   // Then reload books from the database
   handleFormSubmit = event => {
+    console.log("click")
     event.preventDefault();
-    if (this.state.title && this.state.author) {
+    if (this.state.bookSearch) {
       API.saveBook({
-        title: this.state.title,
-        author: this.state.author,
-        synopsis: this.state.synopsis
+        title: this.state.bookSearch.volumeInfo.title,
+        authors: this.state.bookSearch.volumeInfo.authors,
+        description: this.state.bookSearch.searchInfo,
+        thumbnail: this.state.bookSearch.volumeInfo.imageLinks.thumbnail,
+        link: this.state.bookSearch.volumeInfo.infoLink
       })
         .then(res => this.loadBooks())
         .catch(err => console.log(err));
@@ -74,6 +81,7 @@ class Books extends Component {
 
     // setState with data
     this.setState({ bookSearch: data.items })
+    
 
 } // End apiSearch
 
@@ -95,14 +103,6 @@ class Books extends Component {
                 value={this.state.term}
                 onChange={this.handleInputChange}
               />
-
-              {/* Submits all info from input bars into saved books */}
-              <FormBtn 
-                disabled={!(this.state.term)}
-                onClick={this.handleFormSubmit}
-              >
-                Save Book
-              </FormBtn>
             </form>
 
             {/* Search api for books */}
@@ -112,6 +112,9 @@ class Books extends Component {
                 Search for books
             </button>
 
+            <h3 style={{fontFamily: "Luckiest Guy, cursive", background: "#0f6380", color: "black"}} className="rounded pt-2 pb-2 mt-3 text-center">
+              Saved books
+            </h3>
             {this.state.books.length ? (
               <List>
                 {this.state.books.map(bookCard => {
@@ -136,6 +139,9 @@ class Books extends Component {
                         bookCard.searchInfo.textSnippet : 
                         "There is no short discription for this book"}
                       </p>
+
+                      <DeleteBtn onClick={() => this.deleteBook()} />
+
                     </div>
 
                   </ListItem>
@@ -148,7 +154,7 @@ class Books extends Component {
           
           <Col size="lg-6 sm-12">
             <Jumbotron>
-              <h1 style={{ fontFamily: "Luckiest Guy, cursive",  color: "black"}}>Books I've searched using cards</h1>
+              <h1 style={{ fontFamily: "Luckiest Guy, cursive",  color: "black"}}>Books found by API</h1>
             </Jumbotron>
             
             {this.state.bookSearch.length ? (
@@ -175,6 +181,13 @@ class Books extends Component {
                         searchCard.searchInfo.textSnippet : 
                         "There is no short discription for this book"}
                       </p>
+                      <a href={searchCard.volumeInfo.infoLink}>More info..</a>
+
+                      <SaveBtn onClick={() => this.handleFormSubmit()} />
+
+                      <br />
+
+                      <DeleteBtn onClick={() => this.deleteBook()} />
                     </div>
 
                   </ListItem>

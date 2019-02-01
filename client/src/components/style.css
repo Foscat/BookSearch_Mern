@@ -12,6 +12,11 @@
   border: blue solid 2px;
 }
 
+.icon {
+  height: 20px;
+  width: 20px;
+}
+
 .delete-btn {
   float: right;
   color: #e74944;
