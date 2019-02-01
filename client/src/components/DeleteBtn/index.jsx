@@ -6,7 +6,7 @@ import React from "react";
 function DeleteBtn(props) {
   return (
     <span className="delete-btn" role="button" tabIndex="0">
-      ✗
+      <i className="fas fa-eraser"></i>
     </span>
   );
 }

@@ -10,7 +10,9 @@ import Card from "../components/Card";
 class Books extends Component {
   state = {
     books: [],
-    bookSearch: []
+    bookSearch: [],
+    title: "",
+    author: ""
   };
 
   componentDidMount() {
@@ -20,19 +22,47 @@ class Books extends Component {
   componentDidUpdate() {
     console.log(this.state);
   }
+
   loadBooks = () => {
     API.getBooks()
-      .then(res => this.setState({ books: res.data }))
+      .then(res => this.setState({ books: res.data, title: "", author: "" }))
       .catch(err => console.log(err));
+  };
+
+  // Deletes a book from the database with a given id, then reloads books from the db
+  deleteBook = id => {
+    API.deleteBook(id)
+      .then(res => this.loadBooks())
+      .catch(err => console.log(err));
+  };
+  
+  // Handles updating component state when the user types into the input field
+  handleInputChange = event => {
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value
+    });
+  };
+
+    // When the form is submitted, use the API.saveBook method to save the book data
+  // Then reload books from the database
+  handleFormSubmit = event => {
+    event.preventDefault();
+    if (this.state.title && this.state.author) {
+      API.saveBook({
+        title: this.state.title,
+        author: this.state.author
+      })
+        .then(res => this.loadBooks())
+        .catch(err => console.log(err));
+    }
   };
 
   searchBooks = () => {
     console.log(API.search())
     API.search()
-      .then(res => this.setState(
-        { bookSearch: res.data.results.books}
-        )
-      )
+      .then(res => this.setState({ bookSearch: res.data.results.books}))
+      .catch(err => console.log(err));
       console.log(this.state.bookSearch);
       // console.log(res.data.results.books);
   };
@@ -46,11 +76,39 @@ class Books extends Component {
               <h1>What Books Should I Read?</h1>
             </Jumbotron>
             <form>
-              <Input name="title" placeholder="Title (required)" />
-              <Input name="author" placeholder="Author (required)" />
-              <FormBtn onClick={() => API.search()}>Submit Book</FormBtn>
+
+              {/* Take in book title value */}
+              <Input 
+                name="title" 
+                placeholder="Title (required)" 
+                value={this.state.title}
+                onChange={this.handleInputChange}
+              />
+
+              {/* Takes in author name values */}
+              <Input
+                name="author" 
+                placeholder="Author (required)" 
+                value={this.state.author}
+                onChange={this.handleInputChange}
+                />
+
+              {/* Submits all info from input bars into saved books */}
+              <FormBtn 
+                disabled={!(this.state.author && this.state.title)}
+                onClick={this.handleFormSubmit}
+              >
+                Save Book
+              </FormBtn>
             </form>
-            <button onClick={() => this.searchBooks()}>Search</button>
+
+            {/* Search api for books */}
+            <button 
+              className="btn btn-info" 
+              onClick={() => this.searchBooks()}>
+                Search for books
+            </button>
+
           </Col>
           
           <Col size="lg-6 sm-12">

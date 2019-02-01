@@ -1,5 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
+import Books from "./pages/Combo";
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<Books />, document.getElementById("root"));

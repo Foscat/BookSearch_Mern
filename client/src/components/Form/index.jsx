@@ -25,3 +25,20 @@ export function FormBtn(props) {
     </button>
   );
 }
+
+export function FormRow(props) {
+  return(
+    <form className="row" onSubmit={props.getBooks}>
+
+      <input
+        className="form-input"
+        type="text"
+        name="formSearch"
+        placeholder="ex. hardcover-fiction"
+      />
+
+      <button className="form-button">Search</button>
+
+    </form>
+  );
+}

@@ -2,12 +2,11 @@ import axios from "axios";
 
 export default {
   // Gets all books
-  search: async (e, res) => {
-   // e.preventDefault()
-   console.log("test")
+  search: async e => {
+   
+    console.log("test")
     const apiKey = "zgjpi3khaW18Goh5WSGZhszJvLz27vcf";
-    // let author = "Steven King";
-    const queryURL = "https://api.nytimes.com/svc/books/v3/lists/current/hardcover-fiction.json?api-key=" + apiKey;
+    const queryURL = "https://api.nytimes.com/svc/books/v3/lists.json?list=Hardcover Fiction?api-key=" + apiKey;
     const result = await axios.get(queryURL);
     console.log(result)
     return result
