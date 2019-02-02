@@ -42,3 +42,26 @@ export function FormRow(props) {
     </form>
   );
 }
+
+
+
+// {/* <form>
+//                         <div className="hidden">
+//                           <Input info={searchCard.volumeInfo.title} value={this.state.saveInfo.title} name="title" />
+//                           <Input info={searchCard.volumeInfo.authors} name="authors" />
+//                           {/* <Input value={searchCard.searchInfo.textSnippet} name="description" /> */}
+//                           <Input info={searchCard.volumeInfo.imageLinks.thumbnail} name="thumbnail" />
+//                           <Input info={searchCard.volumeInfo.infoLink} name="link" />
+//                         </div>
+//                         <FormBtn onClick={ () =>
+//                           this.setState({ 
+//                             saveInfo: {
+//                               title: this.state.saveInfo.title,
+//                               authors: this.state.saveInfo.authors,
+//                               // description: description.value,
+//                               thumbnail: this.state.saveInfo.thumbnail,
+//                               link: this.state.saveInfo.link
+//                             }
+//                           })
+//                         } />
+//                       </form> */}

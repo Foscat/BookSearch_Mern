@@ -5,7 +5,7 @@ import SaveBtn from "../components/SaveBtn/index";
 import DeleteBtn from "../components/DeleteBtn/index";
 import { Col, Row, Container} from "../components/Grid/index";
 import { List, ListItem} from "../components/List/index";
-import { Input } from "../components/Form/index";
+import { Input, FormBtn } from "../components/Form/index";
 // import Card from "../components/Card";
 
 class Books extends Component {
@@ -13,9 +13,17 @@ class Books extends Component {
 
     super(props)
     this.state = {
+      // Test array is working
     books: [],
     bookSearch: [],
-    term: "history"
+    term: "",
+    saveInfo: {
+      title: "",
+      authors: "",
+      description: "",
+      thumbnail: "",
+      link: "",
+    }
   };
 }
 
@@ -55,13 +63,13 @@ class Books extends Component {
   handleFormSubmit = event => {
     console.log("click")
     event.preventDefault();
-    if (this.state.bookSearch) {
+    if (this.state.bookSearch.volumeInfo.title && this.state.bookSearch.volumeInfo.authors) {
       API.saveBook({
         title: this.state.bookSearch.volumeInfo.title,
         authors: this.state.bookSearch.volumeInfo.authors,
-        description: this.state.bookSearch.searchInfo,
+        // description: this.state.bookSearch.searchInfo.textSnippet,
         thumbnail: this.state.bookSearch.volumeInfo.imageLinks.thumbnail,
-        link: this.state.bookSearch.volumeInfo.infoLink
+        link: this.state.bookSearch.volumeInfo.infolink
       })
         .then(res => this.loadBooks())
         .catch(err => console.log(err));
@@ -112,6 +120,7 @@ class Books extends Component {
                 Search for books
             </button>
 
+            {/* List below search box of saved books in db */}
             <h3 style={{fontFamily: "Luckiest Guy, cursive", background: "#0f6380", color: "black"}} className="rounded pt-2 pb-2 mt-3 text-center">
               Saved books
             </h3>
@@ -139,6 +148,8 @@ class Books extends Component {
                         bookCard.searchInfo.textSnippet : 
                         "There is no short discription for this book"}
                       </p>
+
+                      <a href={bookCard.volumeInfo.infoLink}>More info..</a>
 
                       <DeleteBtn onClick={() => this.deleteBook()} />
 
@@ -182,13 +193,11 @@ class Books extends Component {
                         "There is no short discription for this book"}
                       </p>
                       <a href={searchCard.volumeInfo.infoLink}>More info..</a>
-
-                      <SaveBtn onClick={() => this.handleFormSubmit()} />
-
-                      <br />
-
-                      <DeleteBtn onClick={() => this.deleteBook()} />
+                      
                     </div>
+
+                    {/* I could not get this working so i broke off and worked on group project */}
+                    <SaveBtn />
 
                   </ListItem>
                 )})}

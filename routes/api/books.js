@@ -76,3 +76,20 @@ router.route("/savedBooks/:id")
     })
 
 module.exports = router;
+
+
+
+// { volumeInfo:{
+//     title: "White Fang",
+//     authors: "Jack london",
+//     infoLink: "https://play.google.com/store/books/details?id=vgemBAAAQBAJ&source=gbs_api",
+//     imageLinks: {
+//       thumbnail: "http://books.google.com/books/content?id=vgemBAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+//     }
+//   },
+//   searchInfo: {
+//     textSnippet: "The Call of the Wild is a novel by Jack London published in 1903. The story is set in the Yukon during the 1890s Klondike Gold Rush—a period when strong sled dogs were in high demand."
+//   },
+  
+  
+// }
