@@ -1,24 +1,34 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import React, { Component } from 'react';
+import { BrowserRouter, Route } from "react-router-dom";
 import Books from "./pages/Books";
-import Detail from "./pages/Detail";
 import NoMatch from "./pages/NoMatch";
-import Nav from "./components/Nav/index";
 
-function App() {
-  return (
-    <Router>
-      <div>
-        <Nav />
-        <Switch>
-          <Route exact path="/" component={Books} />
-          <Route exact path="/books" component={Books} />
-          <Route exact path="/books/:id" component={Detail} />
-          <Route component={NoMatch} />
-        </Switch>
-      </div>
-    </Router>
-  );
+class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+
+    }
+  }
+
+  componentDidUpdate = () => {
+    console.log(this.state);
+  }
+
+  render() {
+    return (
+       <div>
+          <BrowserRouter>
+            <div>
+              <Route path="/" exact component={Books} />
+              <Route path="/noMatch" exact component={NoMatch} /> 
+            </div>         
+          </BrowserRouter>
+       </div>
+    );
+  }
 }
+
 
 export default App;

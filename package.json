@@ -30,6 +30,7 @@
     "mongoose": "^5.3.16",
     "path": "^0.12.7",
     "react": "^16.7.0",
+    "react-bootstrap-sweetalert": "^4.4.1",
     "react-dom": "^16.7.0",
     "react-icons": "^3.3.0",
     "react-scroll": "^1.7.10"

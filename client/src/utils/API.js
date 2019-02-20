@@ -3,7 +3,7 @@ import axios from "axios";
 export default {
   
   getBooks: function() {
-    return axios.get("/api/books");
+    return axios.get("/api/getBooks");
   },
   // Gets the book with the given id
   getBook: function(id) {
@@ -12,6 +12,10 @@ export default {
   // Deletes the book with the given id
   deleteBook: function(id) {
     return axios.delete("/api/books/" + id);
+  },
+  // Deletes the book with the given id
+  deleteBooks: function() {
+    return axios.delete("/api/deleteBooks");
   },
   // Saves a book to the database
   saveBook: function(bookData) {

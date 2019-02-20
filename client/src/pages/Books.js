@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import Jumbotron from "../components/Jumbotron/index";
 import API from "../utils/API";
+import axios from "axios";
 import SaveBtn from "../components/SaveBtn/index";
 import DeleteBtn from "../components/DeleteBtn/index";
 import { Col, Row, Container} from "../components/Grid/index";
 import { List, ListItem} from "../components/List/index";
 import { Input, FormBtn } from "../components/Form/index";
+import SweetAlert from "react-bootstrap-sweetalert";
 // import Card from "../components/Card";
 
 class Books extends Component {
@@ -43,6 +45,14 @@ class Books extends Component {
       .catch(err => console.log(err));
   };
 
+  loadLibrary = async e =>{
+    const dbBooks =  await axios.get("/api/getBooks");
+    console.log("Load library: ", dbBooks.data);
+    console.log("State check: ", this.state);
+  };
+
+  addBook
+
   // Deletes a book from the database with a given id, then reloads books from the db
   deleteBook = id => {
     API.deleteBook(id)
@@ -77,6 +87,10 @@ class Books extends Component {
   };
 
   apiSearch = async e => {
+
+    if (this.state.term === "") {
+      this.state.term = "typing for dummies".trim()
+    }
 
     const apiCall = await fetch(
         "https://www.googleapis.com/books/v1/volumes?q=" + 
@@ -120,8 +134,22 @@ class Books extends Component {
                 Search for books
             </button>
 
+            {/* Load books from db */}
+            <button
+              className="btn btn-primary"
+              onClick={() => this.loadLibrary()}>
+                See what others recommend
+              </button>
+
             {/* List below search box of saved books in db */}
-            <h3 style={{fontFamily: "Luckiest Guy, cursive", background: "#0f6380", color: "black"}} className="rounded pt-2 pb-2 mt-3 text-center">
+            <h3 
+              style={{
+                fontFamily: "Luckiest Guy, cursive", 
+                background: "#0f6380", 
+                color: "black"
+              }} 
+              className="rounded pt-2 pb-2 mt-3 text-center"
+            >
               Saved books
             </h3>
             {this.state.books.length ? (
@@ -129,17 +157,25 @@ class Books extends Component {
                 {this.state.books.map(bookCard => {
                   console.log(bookCard);
                 return (
+
                   <ListItem key={bookCard.id}>
+
                     <div>
-                      <h3 style={{ fontFamily: "Oswald, sans-serif",  color: "black"}}>{bookCard.volumeInfo.title}</h3>
-                      <h4 style={{ fontFamily: "Noto Serif SC, serif",  color: "black"}}>By: {bookCard.volumeInfo.authors}</h4>
+                      <h3 style={{ fontFamily: "Oswald, sans-serif",  color: "black"}}>
+                        {bookCard.volumeInfo.title}
+                      </h3>
+                      
+                      <h4 style={{ fontFamily: "Noto Serif SC, serif",  color: "black"}}>
+                        By: {bookCard.volumeInfo.authors}
+                      </h4>
+
                     </div>
 
                     <div>
-                    <img 
-                      src={bookCard.volumeInfo.imageLinks.thumbnail} 
-                      alt={bookCard.volumeInfo.title}
-                    ></img>
+                      <img 
+                        src={bookCard.volumeInfo.imageLinks.thumbnail} 
+                        alt={bookCard.volumeInfo.title}
+                      />
                     </div>
 
                     <div>
@@ -175,15 +211,22 @@ class Books extends Component {
                 return (
                   <ListItem key={searchCard.id}>
                     <div>
-                      <h3 style={{ fontFamily: "Oswald, sans-serif",  color: "black"}}>{searchCard.volumeInfo.title}</h3>
-                      <h4 style={{ fontFamily: "Noto Serif SC, serif",  color: "black"}}>By: {searchCard.volumeInfo.authors}</h4>
+
+                      <h3 style={{ fontFamily: "Oswald, sans-serif",  color: "black"}}>
+                        {searchCard.volumeInfo.title}
+                      </h3>
+
+                      <h4 style={{ fontFamily: "Noto Serif SC, serif",  color: "black"}}>
+                        By: {searchCard.volumeInfo.authors}
+                      </h4>
+
                     </div>
 
                     <div>
-                    <img 
-                      src={searchCard.volumeInfo.imageLinks.thumbnail} 
-                      alt={searchCard.volumeInfo.title}
-                    ></img>
+                      <img 
+                        src={searchCard.volumeInfo.imageLinks.thumbnail} 
+                        alt={searchCard.volumeInfo.title}
+                      />
                     </div>
 
                     <div>
@@ -197,7 +240,7 @@ class Books extends Component {
                     </div>
 
                     {/* I could not get this working so i broke off and worked on group project */}
-                    <SaveBtn />
+                    <SaveBtn  onClick={this.handleFormSubmit}/>
 
                   </ListItem>
                 )})}
